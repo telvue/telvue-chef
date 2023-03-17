@@ -209,7 +209,7 @@ class Chef
         default: []
 
       property :rubygems_url, [String, Array],
-        description: "The location to source rubygems. It can be set to a string or array of strings for URIs to set as rubygems sources. This allows individuals to setup an internal mirror of rubygems for “airgapped” environments.",
+        description: "The location to source rubygems. It can be set to a string or array of strings for URIs to set as rubygems sources. This allows individuals to set up an internal mirror of rubygems for airgapped environments.",
         introduced: "17.11"
 
       property :exception_handlers, Array,
