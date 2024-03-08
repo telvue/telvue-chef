@@ -162,6 +162,7 @@ jobs:
       - name: Run Test Kitchen Converge
         working-directory: kitchen-tests
         run:  |
+          find -name kitchen -type f .
           kitchen converge end-to-end-${{ matrix.os }}
       - name: Run Test Kitchen verify
         working-directory: kitchen-tests
