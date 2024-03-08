@@ -68,7 +68,7 @@ end
 include_recipe "::_packages"
 include_recipe "::_chef_gem"
 
-include_recipe "ntp" unless fedora? # fedora 34+ doesn't have NTP
+include_recipe "chrony"
 
 resolver_config "/etc/resolv.conf" do
   nameservers [ "8.8.8.8", "8.8.4.4" ]
