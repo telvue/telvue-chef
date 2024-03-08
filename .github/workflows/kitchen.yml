@@ -162,12 +162,13 @@ jobs:
       - name: Run Test Kitchen Converge
         working-directory: kitchen-tests
         run:  |
-          find / -name kitchen -type f
-          kitchen converge end-to-end-${{ matrix.os }}
+          pwd
+          ls -alh vendor/bundle/ruby/3.1.0/bin
+          vendor/bundle/ruby/3.1.0/bin/kitchen converge end-to-end-${{ matrix.os }}
       - name: Run Test Kitchen verify
         working-directory: kitchen-tests
         run: |
-          kitchen verify end-to-end-${{ matrix.os }}
+          vendor/bundle/ruby/3.1.0/bin/kitchen verify end-to-end-${{ matrix.os }}
   # Amazon Linux 2 has an issue with systemctl (throws a timedatectl error)
   # if dokken container hosted on Ubuntu 22.04 or later. Lock to Ubuntu 20.04
   # for now.
@@ -194,8 +195,8 @@ jobs:
       - name: Run Test Kitchen Converge
         working-directory: kitchen-tests
         run: |
-          kitchen converge end-to-end-${{ matrix.os }}
+          vendor/bundle/ruby/3.1.0/bin/kitchen converge end-to-end-${{ matrix.os }}
       - name: Run Test Kitchen verify
         working-directory: kitchen-tests
         run: |
-          kitchen verify end-to-end-${{ matrix.os }}
+          vendor/bundle/ruby/3.1.0/bin/kitchen verify end-to-end-${{ matrix.os }}
