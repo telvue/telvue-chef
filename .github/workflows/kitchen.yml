@@ -13,7 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-2022, windows-2019]
-        ruby: ['3.1']
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
@@ -83,18 +82,14 @@ jobs:
         If ($lastexitcode -ne 0) { Exit $lastexitcode }
         gem install chef-cli --no-doc
         If ($lastexitcode -ne 0) { Exit $lastexitcode }
+        chef-cli install --chef-license accept-no-persist
         chef-cli export policy_export --chef-license accept-no-persist
         If ($lastexitcode -ne 0) { Exit $lastexitcode }
         cd policy_export
         chef-client -z --chef-license accept-no-persist
 
   macos:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest]
-        ruby: ['3.1']
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -127,6 +122,7 @@ jobs:
           sudo bundle install --jobs=3 --retry=3
           sudo rm -f /opt/chef/embedded/bin/{htmldiff,ldiff}
           sudo gem install chef-cli --no-doc
+          sudo chef-cli install --chef-license accept-no-persist
           sudo chef-cli export policy_export --chef-license accept-no-persist
           cd policy_export
           sudo chef-client -z --chef-license accept-no-persist
@@ -147,7 +143,6 @@ jobs:
           - 'ubuntu-1804'
           - 'ubuntu-2004'
           - 'ubuntu-2204'
-        ruby: ['3.1']
     runs-on: ubuntu-latest
     env:
       FORCE_FFI_YAJL: ext
@@ -162,10 +157,14 @@ jobs:
           ruby-version: "3.1"
           bundler-cache: true
           working-directory: kitchen-tests
-      - name: Run Test Kitchen
+      - name: Run Test Kitchen Converge
         working-directory: kitchen-tests
         run:  |
-          bundle exec kitchen test end-to-end-${{ matrix.os }}
+          bundle exec kitchen converge end-to-end-${{ matrix.os }}
+      - name: Run Test Kitchen verify
+        working-directory: kitchen-tests
+        run: |
+          bundle exec kitchen verify end-to-end-${{ matrix.os }}
   # Amazon Linux 2 has an issue with systemctl (throws a timedatectl error)
   # if dokken container hosted on Ubuntu 22.04 or later. Lock to Ubuntu 20.04
   # for now.
@@ -175,7 +174,6 @@ jobs:
       matrix:
         os:
           - 'amazonlinux-2'
-        ruby: ['3.1']
     runs-on: ubuntu-20.04
     env:
       FORCE_FFI_YAJL: ext
@@ -190,7 +188,11 @@ jobs:
           ruby-version: "3.1"
           bundler-cache: true
           working-directory: kitchen-tests
-      - name: Run Test Kitchen
+      - name: Run Test Kitchen Converge
         working-directory: kitchen-tests
-        run:  |
-          bundle exec kitchen test end-to-end-${{ matrix.os }}
+        run: |
+          bundle exec kitchen converge end-to-end-${{ matrix.os }}
+      - name: Run Test Kitchen verify
+        working-directory: kitchen-tests
+        run: |
+          bundle exec kitchen verify end-to-end-${{ matrix.os }}
