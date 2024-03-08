@@ -153,22 +153,26 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Install Chef
+        uses: actionshub/chef-install@2.0.4
+      - name: Dokken converge
+        uses: actionshub/test-kitchen@2.1.0
+        env:
+          CHEF_LICENSE: accept-no-persist
+          KITCHEN_LOCAL_YAML: kitchen.dokken.yml
         with:
-          ruby-version: "3.1"
-          bundler-cache: true
-          working-directory: kitchen-tests
-      - name: Run Test Kitchen Converge
-        working-directory: kitchen-tests
-        run:  |
-          pwd
-          ls -alh vendor/bundle/ruby/3.1.0/bin
-          vendor/bundle/ruby/3.1.0/bin/kitchen converge end-to-end-${{ matrix.os }}
-      - name: Run Test Kitchen verify
-        working-directory: kitchen-tests
-        run: |
-          vendor/bundle/ruby/3.1.0/bin/kitchen verify end-to-end-${{ matrix.os }}
+          suite: end-to-end
+          os: ${{ matrix.os }}
+          action: converge
+      - name: Dokken verify
+        uses: actionshub/test-kitchen@2.1.0
+        env:
+          CHEF_LICENSE: accept-no-persist
+          KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+        with:
+          suite: end-to-end
+          os: ${{ matrix.os }}
+          action: verify
   # Amazon Linux 2 has an issue with systemctl (throws a timedatectl error)
   # if dokken container hosted on Ubuntu 22.04 or later. Lock to Ubuntu 20.04
   # for now.
