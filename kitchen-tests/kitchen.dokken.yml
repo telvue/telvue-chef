@@ -37,10 +37,6 @@ lifecycle:
     - remote: /opt/chef/bin/chef-client -v
     - remote: /opt/chef/bin/ohai -v
 
-verifier:
-  name: inspec
-  format: progress
-
 platforms:
 - name: amazonlinux-2
   driver:
@@ -187,8 +183,3 @@ platforms:
     intermediate_instructions:
       - RUN /usr/bin/zypper --non-interactive update
       - RUN /usr/bin/zypper --non-interactive install net-tools-deprecated # we need this for /etc/network/interfaces & ifconfig resource testing
-
-suites:
-  - name: end-to-end
-    run_list:
-      - recipe[end_to_end::default]
