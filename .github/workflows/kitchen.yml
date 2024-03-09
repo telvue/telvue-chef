@@ -14,13 +14,15 @@ jobs:
       matrix:
         os: [windows-2022, windows-2019]
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: kitchen-tests
     steps:
     - uses: actions/checkout@v4
     - name: Install Chef
       uses: actionshub/chef-install@2
     - name: Kitchen converge
       uses: actionshub/test-kitchen@2
-      working-directory: kitchen-tests
       env:
         CHEF_LICENSE: accept-no-persist
         KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
@@ -30,7 +32,6 @@ jobs:
         action: converge
     - name: Kitchen verify
       uses: actionshub/test-kitchen@2
-      working-directory: kitchen-tests
       env:
         CHEF_LICENSE: accept-no-persist
         KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
@@ -41,6 +42,9 @@ jobs:
 
   macos:
     runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: kitchen-tests
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -50,7 +54,6 @@ jobs:
         uses: actionshub/chef-install@2
       - name: Kitchen converge
         uses: actionshub/test-kitchen@2
-        working-directory: kitchen-tests
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.exec.macos.yml
@@ -86,6 +89,9 @@ jobs:
           - 'ubuntu-2004'
           - 'ubuntu-2204'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: kitchen-tests
     env:
       FORCE_FFI_YAJL: ext
       CHEF_LICENSE: accept-no-persist
@@ -96,7 +102,6 @@ jobs:
         uses: actionshub/chef-install@2
       - name: Kitchen converge
         uses: actionshub/test-kitchen@2
-        working-directory: kitchen-tests
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
@@ -106,7 +111,6 @@ jobs:
           action: converge
       - name: Kitchen verify
         uses: actionshub/test-kitchen@2
-        working-directory: kitchen-tests
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
@@ -124,6 +128,9 @@ jobs:
         os:
           - 'amazonlinux-2'
     runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: kitchen-tests
     env:
       FORCE_FFI_YAJL: ext
       CHEF_LICENSE: accept-no-persist
@@ -134,7 +141,6 @@ jobs:
         uses: actionshub/chef-install@2
       - name: Kitchen converge
         uses: actionshub/test-kitchen@2
-        working-directory: kitchen-tests
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
@@ -144,7 +150,6 @@ jobs:
           action: converge
       - name: Kitchen verify
         uses: actionshub/test-kitchen@2
-        working-directory: kitchen-tests
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
