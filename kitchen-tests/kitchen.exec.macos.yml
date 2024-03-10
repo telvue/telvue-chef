@@ -10,6 +10,7 @@ transport:
 
 lifecycle:
   pre_converge:
+    - remote: xcode-select --install
     - remote: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chef -c current
     - remote: export PATH="/opt/chef/bin:/opt/chef/embedded/bin:$PATH"
     - remote: echo "Chef / Ohai release:"
