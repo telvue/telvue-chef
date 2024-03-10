@@ -19,15 +19,15 @@ jobs:
           - windows-2019
           - windows-2022
     runs-on: ubuntu-latest
+    env:
+      CHEF_LICENSE: accept-no-persist
+      # KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
     steps:
     - uses: actions/checkout@v4
-    - run: sudo apt-get update && apt-get install -y vagrant virtualbox
+    - run: sudo apt-get update && sudo apt-get install -y vagrant virtualbox
     - name: Install Chef
       uses: actionshub/chef-install@3.0.0
     - name: Kitchen test
-      env:
-        CHEF_LICENSE: accept-no-persist
-        # KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
       run: |
         cd kitchen-tests
         kitchen converge end-to-end-${{ matrix.os }}
@@ -44,6 +44,9 @@ jobs:
         os:
           - macos-latest
     runs-on: macos-latest
+    env:
+      CHEF_LICENSE: accept-no-persist
+      KITCHEN_LOCAL_YAML: kitchen.exec.macos.yml
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -52,9 +55,6 @@ jobs:
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
       - name: Kitchen test
-        env:
-          CHEF_LICENSE: accept-no-persist
-          KITCHEN_LOCAL_YAML: kitchen.exec.macos.yml
         run: |
           cd kitchen-tests
           kitchen converge end-to-end-${{ matrix.os }}
@@ -82,16 +82,16 @@ jobs:
           - ubuntu-2004
           - ubuntu-2204
     runs-on: ubuntu-latest
+    env:
+      FORCE_FFI_YAJL: ext
+      CHEF_LICENSE: accept-no-persist
+      KITCHEN_LOCAL_YAML: kitchen.dokken.yml
     steps:
       - name: Check out code
         uses: actions/checkout@v4
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
       - name: Kitchen test
-        env:
-          FORCE_FFI_YAJL: ext
-          CHEF_LICENSE: accept-no-persist
-          KITCHEN_LOCAL_YAML: kitchen.dokken.yml
         run: |
           cd kitchen-tests
           kitchen converge end-to-end-${{ matrix.os }}
