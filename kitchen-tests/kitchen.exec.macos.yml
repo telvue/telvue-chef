@@ -18,6 +18,7 @@ lifecycle:
     - remote: echo "Installing appbundler and appbundle-updater gems:"
     - remote: sudo /opt/chef/embedded/bin/gem install appbundler appbundle-updater --no-doc
     - remote: echo "Updating Chef using appbundler-updater:"
+    - remote: sudo /opt/chef/embedded/bin/appbundle-updater chef chef <%= ENV['GITHUB_SHA']  || %x(git rev-parse HEAD).chomp %> --tarball --github <%= ENV['GITHUB_REPOSITORY']  || "chef/chef" %>
     - remote: echo "Installed Chef / Ohai release:"
     - remote: /opt/chef/bin/chef-client -v
     - remote: /opt/chef/bin/ohai -v

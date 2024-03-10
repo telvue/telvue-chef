@@ -72,6 +72,8 @@ jobs:
           - debian-12
           - fedora-latest
           - opensuse-leap-15
+          - rockylinux-8
+          - rockylinux-9
           - ubuntu-1804
           - ubuntu-2004
           - ubuntu-2204
@@ -126,20 +128,23 @@ jobs:
       matrix:
         os:
           - amazonlinux-2
-          - amazonlinux-2023
+          # - amazonlinux-2023 # Bento Amazon Linux 2023 box is not available yet
           - almalinux-8
           - almalinux-9
           - debian-11
           - debian-12
           - fedora-latest
+          - freebsd-13
+          - freebsd-14
           - opensuse-leap-15
+          - rockylinux-8
+          - rockylinux-9
           - ubuntu-1804
           - ubuntu-2004
           - ubuntu-2204
     runs-on: ubuntu-latest
     env:
       CHEF_LICENSE: accept-no-persist
-      # KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update && sudo apt-get install -y vagrant virtualbox

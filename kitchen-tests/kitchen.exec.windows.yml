@@ -33,7 +33,7 @@ lifecycle:
     - remote: gem uninstall -I libyajl2
     - remote: gem install appbundler appbundle-updater --no-doc
     - remote: If ($lastexitcode -ne 0) { Exit $lastexitcode }
-    - remote: appbundle-updater chef chef $env:GITHUB_SHA --tarball --github $env:GITHUB_REPOSITORY
+    - remote: appbundle-updater chef chef <%= ENV['GITHUB_SHA']  || %x(git rev-parse HEAD).chomp %> --tarball --github <%= ENV['GITHUB_REPOSITORY']  || "chef/chef" %>
     - remote: If ($lastexitcode -ne 0) { Exit $lastexitcode }
     - remote: Write-Output "Installed Chef / Ohai release:"
     - remote: chef-client -v
