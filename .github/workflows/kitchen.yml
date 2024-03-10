@@ -12,16 +12,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2022, windows-2019]
-    runs-on: ${{ matrix.os }}
+        os:
+          - windows-10
+          - windows-11
+          - windows-2016
+          - windows-2019
+          - windows-2022
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - run: apt-get update && apt-get install -y vagrant virtualbox
     - name: Install Chef
       uses: actionshub/chef-install@3.0.0
     - name: Kitchen test
       env:
         CHEF_LICENSE: accept-no-persist
-        KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
+        # KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
       run: |
         cd kitchen-tests
         kitchen test end-to-end-${{ matrix.os }}
@@ -41,53 +47,26 @@ jobs:
           KITCHEN_LOCAL_YAML: kitchen.exec.macos.yml
         run: |
           cd kitchen-tests
-          kitchen test end-to-end-${{ matrix.os }}
+          kitchen test end-to-end-macos-latest
 
   linux:
     strategy:
       fail-fast: false
       matrix:
         os:
-          - 'amazonlinux-2'
-          - 'amazonlinux-2023'
-          - 'centos-7'
-          - 'almalinux-8'
-          - 'almalinux-9'
-          - 'debian-11'
-          - 'debian-12'
-          - 'fedora-latest'
-          - 'opensuse-leap-15'
-          - 'ubuntu-1804'
-          - 'ubuntu-2004'
-          - 'ubuntu-2204'
+          - amazonlinux-2
+          - amazonlinux-2023
+          - centos-7
+          - almalinux-8
+          - almalinux-9
+          - debian-11
+          - debian-12
+          - fedora-latest
+          - opensuse-leap-15
+          - ubuntu-1804
+          - ubuntu-2004
+          - ubuntu-2204
     runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Install Chef
-        uses: actionshub/chef-install@3.0.0
-      - name: Kitchen test
-        env:
-          FORCE_FFI_YAJL: ext
-          CHEF_LICENSE: accept-no-persist
-          KITCHEN_LOCAL_YAML: kitchen.dokken.yml
-        run: |
-          cd kitchen-tests
-          kitchen test end-to-end-${{ matrix.os }}
-
-  # Amazon Linux 2 has an issue with systemctl (throws a timedatectl error)
-  # if dokken container hosted on Ubuntu 22.04 or later. Lock to Ubuntu 20.04
-  # for now.
-  linux-2004-host:
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - 'amazonlinux-2'
-    runs-on: ubuntu-20.04
-    env:
-      FORCE_FFI_YAJL: ext
-      CHEF_LICENSE: accept-no-persist
     steps:
       - name: Check out code
         uses: actions/checkout@v4

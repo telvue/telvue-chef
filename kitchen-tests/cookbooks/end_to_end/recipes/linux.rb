@@ -68,7 +68,11 @@ end
 include_recipe "::_packages"
 include_recipe "::_chef_gem"
 
-include_recipe "chrony"
+include_recipe value_for_platform_family(
+                 amazon: { "2" => "ntp" },
+                 opensuse: "chrony",
+                 default: "chrony"
+               )
 
 resolver_config "/etc/resolv.conf" do
   nameservers [ "8.8.8.8", "8.8.4.4" ]
