@@ -1,0 +1,24 @@
+---
+driver:
+  name: exec
+  gui: false
+  customize:
+    memory: 4096
+
+transport:
+  name: exec
+
+lifecycle:
+  pre_converge:
+    - remote: echo "Chef container's Chef / Ohai release:"
+    - remote: /opt/chef/bin/chef-client -v
+    - remote: /opt/chef/bin/ohai -v
+    - remote: echo "Installing appbundler and appbundle-updater gems:"
+    - remote: /opt/chef/embedded/bin/gem install appbundler appbundle-updater --no-doc
+    - remote: echo "Updating Chef using appbundler-updater:"
+    - remote: echo "Installed Chef / Ohai release:"
+    - remote: /opt/chef/bin/chef-client -v
+    - remote: /opt/chef/bin/ohai -v
+
+platforms:
+  - name: macos-latest

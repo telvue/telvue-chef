@@ -21,9 +21,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install Chef
-      uses: actionshub/chef-install@2
+      uses: actionshub/chef-install@v2
     - name: Kitchen converge
-      uses: actionshub/test-kitchen@2
+      uses: actionshub/test-kitchen@v2
       env:
         CHEF_LICENSE: accept-no-persist
         KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
@@ -32,7 +32,7 @@ jobs:
         os: ${{ matrix.os }}
         action: converge
     - name: Kitchen verify
-      uses: actionshub/test-kitchen@2
+      uses: actionshub/test-kitchen@v2
       env:
         CHEF_LICENSE: accept-no-persist
         KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
@@ -49,9 +49,9 @@ jobs:
         with:
             clean: true
       - name: Install Chef
-        uses: actionshub/chef-install@2
+        uses: actionshub/chef-install@v2
       - name: Kitchen converge
-        uses: actionshub/test-kitchen@2
+        uses: actionshub/test-kitchen@v2
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.exec.macos.yml
@@ -60,7 +60,7 @@ jobs:
           os: ${{ matrix.os }}
           action: converge
       - name: Kitchen verify
-        uses: actionshub/test-kitchen@2
+        uses: actionshub/test-kitchen@v2
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.exec.macos.yml
@@ -93,9 +93,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
       - name: Install Chef
-        uses: actionshub/chef-install@2
+        uses: actionshub/chef-install@v2
       - name: Kitchen converge
-        uses: actionshub/test-kitchen@2
+        uses: actionshub/test-kitchen@v2
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
@@ -104,7 +104,7 @@ jobs:
           os: ${{ matrix.os }}
           action: converge
       - name: Kitchen verify
-        uses: actionshub/test-kitchen@2
+        uses: actionshub/test-kitchen@v2
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
@@ -130,9 +130,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
       - name: Install Chef
-        uses: actionshub/chef-install@2
+        uses: actionshub/chef-install@v2
       - name: Kitchen converge
-        uses: actionshub/test-kitchen@2
+        uses: actionshub/test-kitchen@v2
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
@@ -141,7 +141,7 @@ jobs:
           os: ${{ matrix.os }}
           action: converge
       - name: Kitchen verify
-        uses: actionshub/test-kitchen@2
+        uses: actionshub/test-kitchen@v2
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
