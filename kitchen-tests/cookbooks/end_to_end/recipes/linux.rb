@@ -69,9 +69,9 @@ include_recipe "::_packages"
 include_recipe "::_chef_gem"
 
 include_recipe value_for_platform(
-                 amazon: { "2" => "ntp" },
-                 opensuse: "chrony",
-                 default: "chrony"
+                 'amazon' => { "2" => "ntp" },
+                 'opensuse' => "chrony",
+                 'default' => "chrony"
                )
 
 resolver_config "/etc/resolv.conf" do
