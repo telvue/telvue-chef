@@ -7,6 +7,10 @@ name: kitchen
     branches:
       - main
 
+defaults:
+  run:
+    working-directory: kitchen-tests
+
 jobs:
   windows:
     strategy:
@@ -29,11 +33,9 @@ jobs:
       uses: actionshub/chef-install@3.0.0
     - name: Kitchen test
       run: |
-        cd kitchen-tests
         kitchen converge end-to-end-${{ matrix.os }}
         echo "Last exit code: $?"
     - run: |
-        cd kitchen-tests
         kitchen verify end-to-end-${{ matrix.os }}
         echo "Last exit code: $?"
 
@@ -56,11 +58,9 @@ jobs:
         uses: actionshub/chef-install@3.0.0
       - name: Kitchen test
         run: |
-          cd kitchen-tests
           kitchen converge end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
       - run: |
-          cd kitchen-tests
           kitchen verify end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
 
@@ -93,10 +93,8 @@ jobs:
         uses: actionshub/chef-install@3.0.0
       - name: Kitchen test
         run: |
-          cd kitchen-tests
           kitchen converge end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
       - run: |
-          cd kitchen-tests
           kitchen verify end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
