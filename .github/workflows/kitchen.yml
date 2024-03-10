@@ -7,10 +7,6 @@ name: kitchen
     branches:
       - main
 
-defaults:
-  env:
-    working-directory: kitchen-tests
-
 jobs:
   windows:
     strategy:
