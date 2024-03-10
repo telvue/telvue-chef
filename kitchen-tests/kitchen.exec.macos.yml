@@ -10,7 +10,9 @@ transport:
 
 lifecycle:
   pre_converge:
-    - remote: echo "Chef container's Chef / Ohai release:"
+    - remote: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chef -channel current -v latest
+    - remote: export PATH="/opt/chef/bin:/opt/chef/embedded/bin:$PATH"
+    - remote: echo "Chef / Ohai release:"
     - remote: /opt/chef/bin/chef-client -v
     - remote: /opt/chef/bin/ohai -v
     - remote: echo "Installing appbundler and appbundle-updater gems:"

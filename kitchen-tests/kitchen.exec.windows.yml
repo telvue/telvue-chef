@@ -10,6 +10,7 @@ transport:
 
 lifecycle:
   pre_converge:
+    - remote: . { Invoke-WebRequest -useb https://omnitruck.chef.io/install.ps1 } | Invoke-Expression; Install-Project -project chef -channel current
     - remote: $env:PATH = "C:\opscode\chef\bin;C:\opscode\chef\embedded\bin;" + $env:PATH
     - remote: chef-client -v
     - remote: ohai -v
