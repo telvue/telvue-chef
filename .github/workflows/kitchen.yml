@@ -94,7 +94,6 @@ jobs:
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
       - name: Kitchen test
-        uses: actionshub/test-kitchen@2.1.0
         env:
           FORCE_FFI_YAJL: ext
           CHEF_LICENSE: accept-no-persist
