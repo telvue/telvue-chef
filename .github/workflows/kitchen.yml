@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: apt-get update && apt-get install -y vagrant virtualbox
+    - run: sudo apt-get update && apt-get install -y vagrant virtualbox
     - name: Install Chef
       uses: actionshub/chef-install@3.0.0
     - name: Kitchen test
@@ -31,7 +31,11 @@ jobs:
       run: |
         cd kitchen-tests
         kitchen converge end-to-end-${{ matrix.os }}
-    - run: kitchen verify end-to-end-${{ matrix.os }}
+        echo "Last exit code: $?"
+    - run: |
+        cd kitchen-tests
+        kitchen verify end-to-end-${{ matrix.os }}
+        echo "Last exit code: $?"
 
   macos:
     strategy:
@@ -54,7 +58,11 @@ jobs:
         run: |
           cd kitchen-tests
           kitchen converge end-to-end-${{ matrix.os }}
-      - run: kitchen verify end-to-end-${{ matrix.os }}
+          echo "Last exit code: $?"
+      - run: |
+          cd kitchen-tests
+          kitchen verify end-to-end-${{ matrix.os }}
+          echo "Last exit code: $?"
 
   linux:
     strategy:
@@ -86,5 +94,9 @@ jobs:
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
         run: |
           cd kitchen-tests
-                    kitchen converge end-to-end-${{ matrix.os }}
-      - run: kitchen verify end-to-end-${{ matrix.os }}
+          kitchen converge end-to-end-${{ matrix.os }}
+          echo "Last exit code: $?"
+      - run: |
+          cd kitchen-tests
+          kitchen verify end-to-end-${{ matrix.os }}
+          echo "Last exit code: $?"
