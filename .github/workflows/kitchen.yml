@@ -19,7 +19,7 @@ jobs:
         os:
           - windows-2019
           - windows-2022
-    runs-on: {{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     env:
       CHEF_LICENSE: accept-no-persist
       KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
