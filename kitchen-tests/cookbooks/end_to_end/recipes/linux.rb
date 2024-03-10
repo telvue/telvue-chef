@@ -69,8 +69,7 @@ include_recipe "::_packages"
 include_recipe "::_chef_gem"
 
 include_recipe value_for_platform(
-                 'amazon' => {"2" => "ntp"},
-                 'opensuse' => {"15" => "chrony"},
+                 'opensuse' => {"15" => "ntp"},
                  'default' => "chrony"
                )
 
