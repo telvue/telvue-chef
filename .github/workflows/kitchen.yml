@@ -30,9 +30,15 @@ jobs:
         # KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
       run: |
         cd kitchen-tests
-        kitchen test end-to-end-${{ matrix.os }}
+        kitchen converge end-to-end-${{ matrix.os }}
+    - run: kitchen verify end-to-end-${{ matrix.os }}
 
   macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
     runs-on: macos-latest
     steps:
       - name: Check out code
@@ -47,7 +53,8 @@ jobs:
           KITCHEN_LOCAL_YAML: kitchen.exec.macos.yml
         run: |
           cd kitchen-tests
-          kitchen test end-to-end-macos-latest
+          kitchen converge end-to-end-${{ matrix.os }}
+      - run: kitchen verify end-to-end-${{ matrix.os }}
 
   linux:
     strategy:
@@ -79,4 +86,5 @@ jobs:
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
         run: |
           cd kitchen-tests
-          kitchen test end-to-end-${{ matrix.os }}
+                    kitchen converge end-to-end-${{ matrix.os }}
+      - run: kitchen verify end-to-end-${{ matrix.os }}
