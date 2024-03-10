@@ -68,9 +68,12 @@ end
 include_recipe "::_packages"
 include_recipe "::_chef_gem"
 
+puts "\TEST1 = #{node['platform'].inspect}\nTEST2 = #{node['platform_family'].inspect}\nTEST3 = #{node['platform_version'].inspect}\nTEST4 = #{node['os'].inspect}\nTEST5 = #{node['os_version'].inspect}\n"
 include_recipe value_for_platform(
-                 'opensuse' => {"15" => "ntp"},
-                 'default' => "chrony"
+                 suse: "ntp",
+                 amazon: {"2" => "ntp"},
+                 debian: "chrony",
+                 default: "chrony"
                )
 
 resolver_config "/etc/resolv.conf" do
