@@ -70,9 +70,8 @@ include_recipe "::_chef_gem"
 
 puts "\TEST1 = #{node['platform'].inspect}\nTEST2 = #{node['platform_family'].inspect}\nTEST3 = #{node['platform_version'].inspect}\nTEST4 = #{node['os'].inspect}\nTEST5 = #{node['os_version'].inspect}\n"
 include_recipe value_for_platform(
-                 suse: "ntp",
+                 opensuseleap: {"15" => "ntp"},
                  amazon: {"2" => "ntp"},
-                 debian: "chrony",
                  default: "chrony"
                )
 
