@@ -18,17 +18,16 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install Chef
       uses: actionshub/chef-install@3.0.0
+    - run: cd kitchen-tests
     - name: Kitchen converge
       uses: actionshub/test-kitchen@2.1.0
       env:
         CHEF_LICENSE: accept-no-persist
         KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
-        working-directory: kitchen-tests
       with:
         suite: end-to-end
         os: ${{ matrix.os }}
         action: converge
-        working-directory: kitchen-tests
     - name: Kitchen verify
       uses: actionshub/test-kitchen@2.1.0
       env:
@@ -48,17 +47,16 @@ jobs:
             clean: true
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
+      - run: cd kitchen-tests
       - name: Kitchen converge
         uses: actionshub/test-kitchen@2.1.0
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.exec.macos.yml
-          working-directory: kitchen-tests
         with:
           suite: end-to-end
           os: ${{ matrix.os }}
           action: converge
-          working-directory: kitchen-tests
       - name: Kitchen verify
         uses: actionshub/test-kitchen@2.1.0
         env:
@@ -94,6 +92,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
+      - run: cd kitchen-tests
       - name: Kitchen converge
         uses: actionshub/test-kitchen@2.1.0
         env:
@@ -103,13 +102,11 @@ jobs:
           suite: end-to-end
           os: ${{ matrix.os }}
           action: converge
-          working-directory: kitchen-tests
       - name: Kitchen verify
         uses: actionshub/test-kitchen@2.1.0
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
-          working-directory: kitchen-tests
         with:
           suite: end-to-end
           os: ${{ matrix.os }}
@@ -133,12 +130,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
+      - run: cd kitchen-tests
       - name: Kitchen converge
         uses: actionshub/test-kitchen@2.1.0
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
-          working-directory: kitchen-tests
         with:
           suite: end-to-end
           os: ${{ matrix.os }}
@@ -148,7 +145,6 @@ jobs:
         env:
           CHEF_LICENSE: accept-no-persist
           KITCHEN_LOCAL_YAML: kitchen.dokken.yml
-          working-directory: kitchen-tests
         with:
           suite: end-to-end
           os: ${{ matrix.os }}
