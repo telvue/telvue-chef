@@ -25,7 +25,6 @@ jobs:
       KITCHEN_LOCAL_YAML: kitchen.exec.windows.yml
     steps:
     - uses: actions/checkout@v4
-    - run: sudo apt-get update && sudo apt-get install -y vagrant virtualbox
     - name: Install Chef
       uses: actionshub/chef-install@3.0.0
     - name: Kitchen test
