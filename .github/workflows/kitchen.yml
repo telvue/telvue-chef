@@ -12,7 +12,7 @@ defaults:
     working-directory: kitchen-tests
 
 jobs:
-  windows_x86_64:
+  win_x86_64:
     strategy:
       fail-fast: false
       matrix:
@@ -35,7 +35,7 @@ jobs:
         kitchen verify end-to-end-${{ matrix.os }}
         echo "Last exit code: $?"
 
-  macos_x86_64:
+  mac_x86_64:
     strategy:
       fail-fast: false
       matrix:
@@ -60,7 +60,7 @@ jobs:
           kitchen verify end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
 
-  macos_arm64:
+  mac_arm64:
     strategy:
       fail-fast: false
       matrix:
@@ -85,7 +85,7 @@ jobs:
           kitchen verify end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
 
-  linux_x86_64_docker:
+  lnx_x86_64_docker:
     strategy:
       fail-fast: false
       matrix:
@@ -123,7 +123,7 @@ jobs:
   # Amazon Linux 2 has an issue with systemctl (throws a timedatectl error)
   # if dokken container hosted on Ubuntu 22.04 or later. Lock to Ubuntu 20.04
   # for now.
-  amazonlinux-2:
+  amz-2:
     strategy:
       fail-fast: false
       matrix:
@@ -147,42 +147,7 @@ jobs:
           kitchen verify end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
 
-  linux_arm64_docker:
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - amazonlinux-2023
-          - almalinux-8
-          - almalinux-9
-          - debian-11
-          - debian-12
-          - fedora-latest
-          - opensuse-leap-15
-          - rockylinux-8
-          - rockylinux-9
-          - ubuntu-1804
-          - ubuntu-2004
-          - ubuntu-2204
-    runs-on: macos-14
-    env:
-      FORCE_FFI_YAJL: ext
-      CHEF_LICENSE: accept-no-persist
-      KITCHEN_LOCAL_YAML: kitchen.dokken.yml
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Install Chef
-        uses: actionshub/chef-install@3.0.0
-      - name: Kitchen test
-        run: |
-          kitchen converge end-to-end-${{ matrix.os }}
-          echo "Last exit code: $?"
-      - run: |
-          kitchen verify end-to-end-${{ matrix.os }}
-          echo "Last exit code: $?"
-
-  linux_x86_64_vms:
+  lnx_x86_64_vms:
     strategy:
       fail-fast: false
       matrix:
