@@ -61,6 +61,9 @@ platforms:
   - name: rockylinux-8
   - name: rockylinux-9
   - name: ubuntu-18.04
+    lifecycle:
+      post_create:
+        - remote: sudo apt-get update && sudo apt-get install -y curl
   - name: ubuntu-20.04
   - name: ubuntu-22.04
 

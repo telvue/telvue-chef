@@ -41,6 +41,8 @@ jobs:
       matrix:
         os:
           - macos-latest
+          - macos-13
+          - macos-14-large
     runs-on: ${{ matrix.os }}
     env:
       CHEF_LICENSE: accept-no-persist
@@ -85,7 +87,7 @@ jobs:
           kitchen verify end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
 
-  lnx_x86_64_docker:
+  docker_lnx_x86_64:
     strategy:
       fail-fast: false
       matrix:
@@ -123,7 +125,7 @@ jobs:
   # Amazon Linux 2 has an issue with systemctl (throws a timedatectl error)
   # if dokken container hosted on Ubuntu 22.04 or later. Lock to Ubuntu 20.04
   # for now.
-  amz-2:
+  docker_amz-2_x86_64:
     strategy:
       fail-fast: false
       matrix:
@@ -147,7 +149,7 @@ jobs:
           kitchen verify end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
 
-  lnx_x86_64_vms:
+  vm_lnx_x86_64:
     strategy:
       fail-fast: false
       matrix:
