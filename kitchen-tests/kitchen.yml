@@ -17,28 +17,6 @@ provisioner:
   chef_license: accept-no-persist
   slow_resource_report: true
 
-lifecycle:
-  pre_converge:
-    - remote: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chef -c current
-    - remote: export PATH="/opt/chef/bin:/opt/chef/embedded/bin:$PATH"
-    - remote: echo "Chef container's Chef / Ohai release:"
-    - remote: /opt/chef/bin/chef-client -v
-    - remote: /opt/chef/bin/ohai -v
-    - remote: echo "Installing appbundler and appbundle-updater gems:"
-    - remote: sudo /opt/chef/embedded/bin/gem install appbundler appbundle-updater --no-doc
-    - remote: scl enable devtoolset-7 'sudo /opt/chef/embedded/bin/appbundle-updater chef chef <%= ENV['GITHUB_SHA']  || %x(git rev-parse HEAD).chomp %> --tarball --github <%= ENV['GITHUB_REPOSITORY']  || "chef/chef" %>'
-      includes:
-        - centos-7
-        - oraclelinux-7
-    - remote: echo "Updating Chef using appbundler-updater:"
-    - remote: sudo /opt/chef/embedded/bin/appbundle-updater chef chef <%= ENV['GITHUB_SHA']  || %x(git rev-parse HEAD).chomp %> --tarball --github <%= ENV['GITHUB_REPOSITORY']  || "chef/chef" %>
-      excludes:
-        - centos-7
-        - oraclelinux-7
-    - remote: echo "Installed Chef / Ohai release:"
-    - remote: /opt/chef/bin/chef-client -v
-    - remote: /opt/chef/bin/ohai -v
-
 verifier:
   name: inspec
   format: progress

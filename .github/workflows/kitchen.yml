@@ -12,7 +12,7 @@ defaults:
     working-directory: kitchen-tests
 
 jobs:
-  windows:
+  windows_x86_64:
     strategy:
       fail-fast: false
       matrix:
@@ -35,13 +35,13 @@ jobs:
         kitchen verify end-to-end-${{ matrix.os }}
         echo "Last exit code: $?"
 
-  macos:
+  macos_x86_64:
     strategy:
       fail-fast: false
       matrix:
         os:
           - macos-latest
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
     env:
       CHEF_LICENSE: accept-no-persist
       KITCHEN_LOCAL_YAML: kitchen.exec.macos.yml
@@ -60,7 +60,32 @@ jobs:
           kitchen verify end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
 
-  linux:
+  macos_arm64:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-14
+    runs-on: ${{ matrix.os }}
+    env:
+      CHEF_LICENSE: accept-no-persist
+      KITCHEN_LOCAL_YAML: kitchen.exec.macos.yml
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          clean: true
+      - name: Install Chef
+        uses: actionshub/chef-install@3.0.0
+      - name: Kitchen test
+        run: |
+          kitchen converge end-to-end-${{ matrix.os }}
+          echo "Last exit code: $?"
+      - run: |
+          kitchen verify end-to-end-${{ matrix.os }}
+          echo "Last exit code: $?"
+
+  linux_x86_64_docker:
     strategy:
       fail-fast: false
       matrix:
@@ -98,7 +123,7 @@ jobs:
   # Amazon Linux 2 has an issue with systemctl (throws a timedatectl error)
   # if dokken container hosted on Ubuntu 22.04 or later. Lock to Ubuntu 20.04
   # for now.
-  linux2:
+  amazonlinux-2:
     strategy:
       fail-fast: false
       matrix:
@@ -122,7 +147,42 @@ jobs:
           kitchen verify end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
 
-  linux3:
+  linux_arm64_docker:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - amazonlinux-2023
+          - almalinux-8
+          - almalinux-9
+          - debian-11
+          - debian-12
+          - fedora-latest
+          - opensuse-leap-15
+          - rockylinux-8
+          - rockylinux-9
+          - ubuntu-1804
+          - ubuntu-2004
+          - ubuntu-2204
+    runs-on: macos-14
+    env:
+      FORCE_FFI_YAJL: ext
+      CHEF_LICENSE: accept-no-persist
+      KITCHEN_LOCAL_YAML: kitchen.dokken.yml
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Install Chef
+        uses: actionshub/chef-install@3.0.0
+      - name: Kitchen test
+        run: |
+          kitchen converge end-to-end-${{ matrix.os }}
+          echo "Last exit code: $?"
+      - run: |
+          kitchen verify end-to-end-${{ matrix.os }}
+          echo "Last exit code: $?"
+
+  linux_x86_64_vms:
     strategy:
       fail-fast: false
       matrix:
@@ -145,6 +205,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CHEF_LICENSE: accept-no-persist
+      KITCHEN_LOCAL_YAML: kitchen.linux.ci.yml
     steps:
       - uses: actions/checkout@v4
       - name: Install Vagrant and VirtualBox

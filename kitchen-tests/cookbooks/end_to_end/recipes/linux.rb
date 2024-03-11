@@ -197,15 +197,15 @@ include_recipe "::_openssl"
 # include_recipe "::_tests" # generates UTF-8 error
 include_recipe "::_mount"
 include_recipe "::_ifconfig"
-unless RbConfig::CONFIG["host_cpu"].eql?("aarch64") # Habitat supervisor doesn't support aarch64 yet
-  if ::File.exist?("/etc/systemd/system")
-    include_recipe "::_habitat_config"
-    include_recipe "::_habitat_install_no_user"
-    include_recipe "::_habitat_package"
-    include_recipe "::_habitat_service"
-    include_recipe "::_habitat_sup"
-    include_recipe "::_habitat_user_toml"
-  end
-end
+# unless RbConfig::CONFIG["host_cpu"].eql?("aarch64") # Habitat supervisor doesn't support aarch64 yet
+#   if ::File.exist?("/etc/systemd/system")
+#     include_recipe "::_habitat_config"
+#     include_recipe "::_habitat_install_no_user"
+#     include_recipe "::_habitat_package"
+#     include_recipe "::_habitat_service"
+#     include_recipe "::_habitat_sup"
+#     include_recipe "::_habitat_user_toml"
+#   end
+# end
 
 include_recipe "::_snap" if platform?("ubuntu")
