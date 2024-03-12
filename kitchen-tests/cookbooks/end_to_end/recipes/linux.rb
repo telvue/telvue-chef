@@ -71,9 +71,9 @@ include_recipe "::_chef_gem"
 include_recipe value_for_platform(
                  opensuseleap: {"default" => "ntp"},
                  amazon: {"2" => "ntp"},
-                 oracle: {"7" => "ntp"},
-                 centos: {"7" => "ntp"},
-                 rhel: {"7" => "ntp"},
+                 oracle: {"<= 8" => "ntp"},
+                 centos: {"<= 8" => "ntp"},
+                 rhel: {"<= 8" => "ntp"},
                  default: "chrony"
                )
 
