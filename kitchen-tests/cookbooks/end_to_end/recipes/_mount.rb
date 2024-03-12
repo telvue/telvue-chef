@@ -5,9 +5,8 @@ mount "/proc" do
   action %i{ mount enable }
 end
 
-mount "/mnt" do
-  device "/etc"
-  fstype "ext4"
-  options %w{bind rw}
+directory "/mnt/cdrom"
+mount "/mnt/cdrom" do
+  device "/dev/cdrom"
   action %i{ mount enable }
 end

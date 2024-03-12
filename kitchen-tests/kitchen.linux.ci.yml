@@ -61,9 +61,9 @@ platforms:
   - name: freebsd-13
   - name: freebsd-14
   - name: opensuse-leap-15
-  - name: oraclelinux-7
-  - name: oraclelinux-8
-  - name: oraclelinux-9
+  - name: oracle-7
+  - name: oracle-8
+  - name: oracle-9
   - name: rockylinux-8
   - name: rockylinux-9
   - name: ubuntu-18.04

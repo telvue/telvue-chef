@@ -71,6 +71,7 @@ include_recipe "::_chef_gem"
 include_recipe value_for_platform(
                  opensuseleap: {"default" => "ntp"},
                  amazon: {"2" => "ntp"},
+                 rhel: {"7" => "ntp"},
                  default: "chrony"
                )
 
@@ -196,7 +197,7 @@ include_recipe "::_ohai_hint"
 include_recipe "::_openssl"
 # include_recipe "::_tests" # generates UTF-8 error
 include_recipe "::_mount"
-include_recipe "::_ifconfig" unless platform?("ubuntu") && node["platform_version"] >= "20.04"
+include_recipe "::_ifconfig" unless platform?("ubuntu") && node["platform_version"] >= "20.04" || platform_family?("suse")
 # unless RbConfig::CONFIG["host_cpu"].eql?("aarch64") # Habitat supervisor doesn't support aarch64 yet
 #   if ::File.exist?("/etc/systemd/system")
 #     include_recipe "::_habitat_config"
