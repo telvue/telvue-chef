@@ -18,3 +18,5 @@ chef_client_config 'default' do
     end
   CONFIG
 end
+
+puts "\n\nTEST1 = #{::File.exist?('/etc/chef')}\nTEST2 = #{::File.exist?('/etc/chef/client.rb')}\n\n"
