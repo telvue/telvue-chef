@@ -57,7 +57,7 @@ end
 #
 
 # Opensuse leap doesn't have a crontab till a user creates one causing these resources to fail
-# unless platform_family?("suse")
+unless platform_family?("suse")
   cron "some random cron job" do
     minute  0
     hour    23
@@ -67,4 +67,4 @@ end
   cron "remove_a_job" do
     action :delete
   end
-# end
+end
