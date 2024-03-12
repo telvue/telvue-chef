@@ -56,7 +56,7 @@ end
 # cron resource
 #
 
-directory "/etc/crontab" if platform_family?("suse")
+file "/etc/crontab" if platform_family?("suse")
 
 cron "some random cron job" do
   minute  0

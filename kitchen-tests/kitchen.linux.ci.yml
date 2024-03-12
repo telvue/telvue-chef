@@ -22,7 +22,7 @@ lifecycle:
     - remote: sudo apt-get update && sudo apt-get install -y curl
       includes:
         - ubuntu-1804
-    - remote: dnf install -y openssl
+    - remote: sudo dnf install -y openssl
       includes:
         - fedora-latest
     - remote: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chef -c current
@@ -67,9 +67,6 @@ platforms:
   - name: rockylinux-8
   - name: rockylinux-9
   - name: ubuntu-18.04
-    lifecycle:
-      post_create:
-        - remote: sudo apt-get update && sudo apt-get install -y curl
   - name: ubuntu-20.04
   - name: ubuntu-22.04
 
