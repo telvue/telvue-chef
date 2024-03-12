@@ -56,14 +56,15 @@ end
 # cron resource
 #
 
-file "/etc/crontab" if platform_family?("suse")
+# Opensuse leap doesn't have a crontab till a user creates one causing these resources to fail
+unless platform_family?("suse")
+  cron "some random cron job" do
+    minute  0
+    hour    23
+    command "/usr/bin/true"
+  end
 
-cron "some random cron job" do
-  minute  0
-  hour    23
-  command "/usr/bin/true"
-end
-
-cron "remove_a_job" do
-  action :delete
+  cron "remove_a_job" do
+    action :delete
+  end
 end
