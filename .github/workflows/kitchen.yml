@@ -87,7 +87,7 @@ jobs:
           kitchen verify end-to-end-${{ matrix.os }}
           echo "Last exit code: $?"
 
-  docker_lnx_x86_64:
+  docr_lnx_x86_64:
     strategy:
       fail-fast: false
       matrix:
@@ -125,7 +125,7 @@ jobs:
   # Amazon Linux 2 has an issue with systemctl (throws a timedatectl error)
   # if dokken container hosted on Ubuntu 22.04 or later. Lock to Ubuntu 20.04
   # for now.
-  docker_amz-2_x86_64:
+  docr_amz-2_x86_64:
     strategy:
       fail-fast: false
       matrix:
