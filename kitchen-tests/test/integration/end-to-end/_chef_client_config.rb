@@ -3,7 +3,7 @@ client_rb = if os.windows?
             else
               '/etc/chef/client.rb'
             end
-
+puts "\n\nTEST1 = #{File.exist?(client_rb).inspect}\nTEST2 = #{File.read(client_rb).inspect}\n\n"
 describe file(client_rb) do
   it { should exist }
   its("content") { should match(%r{chef_server_url "https://localhost"}) }

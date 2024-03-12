@@ -27,10 +27,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Install Chef
       uses: actionshub/chef-install@3.0.0
-    - name: Kitchen Converge
-      run: kitchen converge end-to-end-${{ matrix.os }}
-    - name: Kitchen Verify
-      run: kitchen verify end-to-end-${{ matrix.os }}
+    - name: Kitchen Test
+      run: kitchen test end-to-end-${{ matrix.os }}
 
   mac_x86_64:
     strategy:
@@ -51,10 +49,8 @@ jobs:
             clean: true
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
-      - name: Kitchen Converge
-        run: kitchen converge end-to-end-${{ matrix.os }}
-      - name: Kitchen Verify
-        run: kitchen verify end-to-end-${{ matrix.os }}
+      - name: Kitchen Test
+        run: kitchen test end-to-end-${{ matrix.os }}
 
   mac_arm64:
     strategy:
@@ -73,10 +69,8 @@ jobs:
           clean: true
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
-      - name: Kitchen Converge
-        run: kitchen converge end-to-end-${{ matrix.os }}
-      - name: Kitchen Verify
-        run: kitchen verify end-to-end-${{ matrix.os }}
+      - name: Kitchen Test
+        run: kitchen test end-to-end-${{ matrix.os }}
 
   docr_lnx_x86_64:
     strategy:
@@ -86,6 +80,7 @@ jobs:
           - amazonlinux-2023
           - almalinux-8
           - almalinux-9
+          - centos-7
           - debian-11
           - debian-12
           - fedora-latest
@@ -93,7 +88,7 @@ jobs:
           - oraclelinux-7
           - oraclelinux-8
           - oraclelinux-9
-          - rockylinux-8
+          # - rockylinux-8 # Need to troubleshoot issue with container startup
           - rockylinux-9
           - ubuntu-1804
           - ubuntu-2004
@@ -108,10 +103,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
-      - name: Kitchen Converge
-        run:  kitchen converge end-to-end-${{ matrix.os }}
-      - name: Kitchen Verify
-        run: kitchen verify end-to-end-${{ matrix.os }}
+      - name: Kitchen Test
+        run: kitchen test end-to-end-${{ matrix.os }}
 
   # Amazon Linux 2 has an issue with systemctl (throws a timedatectl error)
   # if dokken container hosted on Ubuntu 22.04 or later. Lock to Ubuntu 20.04
@@ -132,10 +125,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
-      - name: Kitchen Converge
-        run: kitchen converge end-to-end-${{ matrix.os }}
-      - name: Kitchen Verify
-        run: kitchen verify end-to-end-${{ matrix.os }}
+      - name: Kitchen Test
+        run: kitchen test end-to-end-${{ matrix.os }}
 
   vm_lnx_x86_64:
     strategy:
@@ -146,11 +137,12 @@ jobs:
           # - amazonlinux-2023 # Bento Amazon Linux 2023 box is not available yet
           - almalinux-8
           - almalinux-9
+          - centos-7
           - debian-11
           - debian-12
           - fedora-latest
-          - freebsd-13
-          - freebsd-14
+          # - freebsd-13 # Need to troubleshoot shell invalid issue
+          # - freebsd-14 # Need to troubleshoot bad bento box issue
           - opensuse-leap-15
           - oracle-7
           - oracle-8
@@ -176,7 +168,5 @@ jobs:
           sudo apt-get install -y vagrant virtualbox
       - name: Install Chef
         uses: actionshub/chef-install@3.0.0
-      - name: Kitchen Converge
-        run: kitchen converge end-to-end-${{ matrix.os }}
-      - name: Kitchen Verify
-        run: kitchen verify end-to-end-${{ matrix.os }}
+      - name: Kitchen Test
+        run: kitchen test end-to-end-${{ matrix.os }}
