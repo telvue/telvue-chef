@@ -19,6 +19,12 @@ provisioner:
 
 lifecycle:
   pre_converge:
+    - remote: sudo apt-get update && sudo apt-get install -y curl
+      includes:
+        - ubuntu-1804
+    - remote: dnf install -y openssl
+      includes:
+        - fedora-latest
     - remote: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chef -c current
     - remote: export PATH="/opt/chef/bin:/opt/chef/embedded/bin:$PATH"
     - remote: echo "Chef container's Chef / Ohai release:"
