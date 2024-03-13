@@ -1,3 +1,12 @@
+*** Forked by TelVue ***
+
+- Knife Solo is abandonware and only works up to chef version 16.x
+- OpenSSL 3 does not allow the rsa ssh required by the version of net-ssh used
+  by chef 16
+- Forked chef gem to raise version cap on net-ssh over v7
+
+
+
 # Chef Infra
 [![Code Climate](https://codeclimate.com/github/chef/chef.svg)](https://codeclimate.com/github/chef/chef)
 [![Build Status](https://badge.buildkite.com/c82093430ceec7d27af05febb9dcafe3aa331fff9d74c0ab9d.svg?branch=chef-16)](https://buildkite.com/chef-oss/chef-chef-chef-16-verify)
